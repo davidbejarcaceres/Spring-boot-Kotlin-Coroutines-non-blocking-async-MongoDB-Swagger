@@ -49,3 +49,31 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
 }
 ```
+## Benefits of Reactive non-blocking
+
+---------------------
+Most of it benefits comes from performance and real-time applications. When we are using reactive, will be capable to finish more requests/s, also with a lower failure rate.
+For more information and benchmarks about performance you can check here:
+  - Reactive vs Non-Reactive Spring Performance: https://frandorado.github.io/spring/2019/06/26/spring-reactive-vs-non-reactive-performance.html
+  - Spring Boot performance benchmarks with Tomcat, Undertow and Webflux (Netty): https://dev.to/azure/spring-boot-performance-benchmarks-with-tomcat-undertow-and-webflux-4d8k
+
+## OpenAPI 3.0 (a.k.a. Swagger) to document the API
+
+---------------------
+ To document the API and test the end-points of the controller, start the project and access the url:
+ 
+   #### http://localhost:8080/swagger-ui.html
+ 
+ To integrate OpenApi 3 into spring boot, we need to add a few dependencies (https://www.baeldung.com/spring-rest-openapi-documentation):
+   - springdoc-openapi-webflux-ui: For web-flux projects (https://springdoc.org/#spring-weblfux-support-with-annotated-controllers)
+   - springdoc-openapi-kotlin: This dependency improves the support of Kotlin types (https://springdoc.org/#kotlin-support).
+ 
+```gradle
+ dependencies {
+    implementation("org.springdoc:springdoc-openapi-webflux-ui:1.3.9")
+    implementation("org.springdoc:springdoc-openapi-kotlin:1.3.9")
+ }
+ ```
+ The related configuration for OpenAPI like Title, contact info, licence and everythin is inside OpenAPIConfig.kt using a @onfiguration annotation
+ Also to migrate from old Sprinfox Swagger-ui 2.0 to new docs, use the following guide: https://springdoc.org/migrating-from-springfox.html
+ 
