@@ -77,3 +77,4 @@ For more information and benchmarks about performance you can check here:
  The related configuration for OpenAPI like Title, contact info, licence and everythin is inside OpenAPIConfig.kt using a @onfiguration annotation
  Also to migrate from old Sprinfox Swagger-ui 2.0 to new docs, use the following guide: https://springdoc.org/migrating-from-springfox.html
  
+ ![Arquitechture of the system implemented](OpenAPI3.jpg)
