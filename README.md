@@ -60,6 +60,20 @@ For more information and benchmarks about performance you can check here:
 ## OpenAPI 3.0 (a.k.a. Swagger) to document the API
 
 ---------------------
- To document the API and test the end-points of the controller (https://www.baeldung.com/spring-rest-openapi-documentation)
+ To document the API and test the end-points of the controller, start the project and access the url:
  
+   #### http://localhost:8080/swagger-ui.html
+ 
+ To integrate OpenApi 3 into spring boot, we need to add a few dependencies (https://www.baeldung.com/spring-rest-openapi-documentation):
+   - springdoc-openapi-webflux-ui: For web-flux projects (https://springdoc.org/#spring-weblfux-support-with-annotated-controllers)
+   - springdoc-openapi-kotlin: This dependency improves the support of Kotlin types (https://springdoc.org/#kotlin-support).
+ 
+```gradle
+ dependencies {
+    implementation("org.springdoc:springdoc-openapi-webflux-ui:1.3.9")
+    implementation("org.springdoc:springdoc-openapi-kotlin:1.3.9")
+ }
+ ```
+ The related configuration for OpenAPI like Title, contact info, licence and everythin is inside OpenAPIConfig.kt using a @onfiguration annotation
+ Also to migrate from old Sprinfox Swagger-ui 2.0 to new docs, use the following guide: https://springdoc.org/migrating-from-springfox.html
  

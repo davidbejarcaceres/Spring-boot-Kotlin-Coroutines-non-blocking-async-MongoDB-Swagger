@@ -1,6 +1,10 @@
 package com.davidbejarcaceres.kotlincoroutinessuspend
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.media.Content
+import io.swagger.v3.oas.annotations.media.Schema
+import io.swagger.v3.oas.annotations.responses.ApiResponse
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.reactive.asFlow
@@ -20,6 +24,9 @@ class ProductControllerCoroutines(val repoPlayers: PlayersRepository) {
     @GetMapping("/{id}", produces = ["application/json"])
     suspend fun getPlayersById(@PathVariable id: String): Player? = repoPlayers.findById(id).awaitFirstOrNull()
 
+    @Operation(summary  = "Find Player by ID", responses = [
+        ApiResponse(responseCode = "200", description  = "OK", content = [Content(schema = Schema(implementation = Player::class))])
+    ])
     @GetMapping("/dni/{dni}", produces = ["application/json"])
     suspend fun getPlayersByDNI(@PathVariable("dni") dni : String): Player? = repoPlayers.findByDni(dni)?.awaitFirstOrNull()
 
