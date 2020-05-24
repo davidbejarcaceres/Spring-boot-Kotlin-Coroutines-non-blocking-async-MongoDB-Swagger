@@ -12,11 +12,13 @@ import kotlinx.coroutines.reactive.awaitFirstOrNull
 import org.bson.types.ObjectId
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import reactor.core.publisher.Flux
+import java.time.Duration
 
 @CrossOrigin(origins = ["*"]) //CORS security, Allows connecting to the API from external paths.
 @RestController
 @RequestMapping("/players")
-class ProductControllerCoroutines(val repoPlayers: PlayersRepository) {
+class PlayersControllerCoroutines(val repoPlayers: PlayersRepository, val jsonMapper : ObjectMapper) {
 
     @GetMapping(produces = ["application/json"])
     suspend fun getPlayers(): Flow<Player> = repoPlayers.findAll().asFlow()
@@ -54,11 +56,10 @@ class ProductControllerCoroutines(val repoPlayers: PlayersRepository) {
     //@ApiOperation(value = "Add new Player or array of players", response = Players::class)
     @PostMapping(value = [""], produces = ["application/json"])
     suspend fun createNewPLayerOrMultiplePlayers(@RequestBody newPlayer: Any): ResponseEntity<Any> {
-        val mapper = ObjectMapper()
         try {
             //Try to convert single object (LinkedHashMap) to Json String (String) and back to Players
-            val jsonInString: String = mapper.writeValueAsString(newPlayer)
-            val playerSerielized: Player = mapper.readValue(jsonInString, Player::class.java)
+            val jsonInString: String = jsonMapper.writeValueAsString(newPlayer)
+            val playerSerielized: Player = jsonMapper.readValue(jsonInString, Player::class.java)
 
             if (!playerSerielized._id.isNullOrEmpty() && getPlayersById(playerSerielized._id!!) != null) {
                 return ResponseEntity.status(400).body("ERROR: Player with same ID already found")
@@ -74,8 +75,8 @@ class ProductControllerCoroutines(val repoPlayers: PlayersRepository) {
         }
 
         try {//Try to convert multiple objects (Array<LinkedHashMap>) to Json String (String) and back to Array<Players>
-            val jsonInString: String = mapper.writeValueAsString(newPlayer)
-            val listOfPlayers: Array<Player> = mapper.readValue(jsonInString, Array<Player>::class.java);
+            val jsonInString: String = jsonMapper.writeValueAsString(newPlayer)
+            val listOfPlayers: Array<Player> = jsonMapper.readValue(jsonInString, Array<Player>::class.java);
 
             if (listOfPlayers is Array<Player> && !listOfPlayers.isEmpty()) {
                 listOfPlayers.forEach { it ->
@@ -130,13 +131,4 @@ class ProductControllerCoroutines(val repoPlayers: PlayersRepository) {
             ResponseEntity.ok()
         }
     }
-
-    @GetMapping("/helloworld/{name}")
-    suspend fun helloWorldUser(@PathVariable("name") name: String?): String = "Hellow World $name";
-
-    @GetMapping("/hello/{name}")
-    suspend fun findOne(@PathVariable name: String): String = GlobalScope.async(Dispatchers.Default, start = CoroutineStart.LAZY) {
-        delay(5000)
-        "Hola $name"
-    }.await()
 }
