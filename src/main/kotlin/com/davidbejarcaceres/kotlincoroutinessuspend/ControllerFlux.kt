@@ -19,12 +19,9 @@ class ControllerFlux(val repoPlayers: PlayersRepository, val jsonMapper : Object
             .map { "Hola $name  (${java.time.LocalDateTime.now().hour}:${java.time.LocalDateTime.now().second}) \n\n" }
 
     @GetMapping("")
-    fun getPlayersSlowFlux(): Any? = repoPlayers.findAll()
+    fun getPlayersSlowFlux(): Flux<String>? = repoPlayers.findAll()
             .delayElements(Duration.ofMillis(500) )
-            .map { "Player ID: ${it._id} " +
-                    "name: ${it.name}, " +
-                    "lastname: ${it.lastname}, " +
-                    "dni: ${it.dni} \n"}
+            .map { it.toString()}
 
     @GetMapping("/{id}")
     fun getPlayersByIdSlowFlux(@PathVariable("id") id: String): Mono<Player>? =

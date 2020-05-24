@@ -5,20 +5,17 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
-import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.reactive.asFlow
 import kotlinx.coroutines.reactive.awaitFirstOrNull
 import org.bson.types.ObjectId
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import reactor.core.publisher.Flux
-import java.time.Duration
 
 @CrossOrigin(origins = ["*"]) //CORS security, Allows connecting to the API from external paths.
 @RestController
 @RequestMapping("/players")
-class PlayersControllerCoroutines(val repoPlayers: PlayersRepository, val jsonMapper : ObjectMapper) {
+class ProductControllerCoroutines(val repoPlayers: PlayersRepository, val jsonMapper : ObjectMapper) {
 
     @GetMapping(produces = ["application/json"])
     suspend fun getPlayers(): Flow<Player> = repoPlayers.findAll().asFlow()
