@@ -49,3 +49,17 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
 }
 ```
+## Benefits of Reactive non-blocking
+
+---------------------
+Most of it benefits comes from performance and real-time applications. When we are using reactive, will be capable to finish more requests/s, also with a lower failure rate.
+For more information and benchmarks about performance you can check here:
+  - Reactive vs Non-Reactive Spring Performance: https://frandorado.github.io/spring/2019/06/26/spring-reactive-vs-non-reactive-performance.html
+  - Spring Boot performance benchmarks with Tomcat, Undertow and Webflux (Netty): https://dev.to/azure/spring-boot-performance-benchmarks-with-tomcat-undertow-and-webflux-4d8k
+
+## OpenAPI 3.0 (a.k.a. Swagger) to document the API
+
+---------------------
+ To document the API and test the end-points of the controller (https://www.baeldung.com/spring-rest-openapi-documentation)
+ 
+ 
